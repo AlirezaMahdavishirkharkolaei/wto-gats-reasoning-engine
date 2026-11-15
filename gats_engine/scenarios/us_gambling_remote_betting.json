@@ -1,0 +1,53 @@
+{
+  "title": "Validation case: prohibition of remote gambling services (based on US – Gambling, DS285)",
+  "answers": {
+    "name": "Prohibition of remote supply of gambling and betting services",
+    "member": "United States",
+    "description": "Federal and state laws prohibit the cross-border (remote) supply of gambling and betting services.",
+    "sector": "Other recreational services (W/120 10.D, CPC 964), as interpreted in DS285",
+    "modes": [
+      "mode1"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "yes",
+    "nt_origin": "no",
+    "nt_like": "unknown",
+    "nt_lfv": "no",
+    "dr_type": "no",
+    "x_paragraph": "a_morals",
+    "x_order_threat": "unknown",
+    "x_design": "yes",
+    "x_contribution": "yes",
+    "x_highly_restrictive": "yes",
+    "x_alternative": "no",
+    "ch_discrimination": "yes",
+    "ch_disguised": "unknown",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "ma_zero_quota": "The Appellate Body treated the prohibition as a 'zero quota' under XVI:2(a) and (c).",
+    "x_alternative": "Antigua's proposed alternative (consultations) was not a reasonably available alternative.",
+    "ch_discrimination": "Domestic remote betting on horse racing appeared permitted (Interstate Horseracing Act), so the US did not meet the chapeau."
+  },
+  "sources": [
+    {
+      "label": "US – Gambling (DS285)",
+      "url": "https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds285_e.htm"
+    }
+  ],
+  "expected": {
+    "inconsistencies": [
+      "Article XVI (market access)"
+    ],
+    "risk": "High"
+  }
+}

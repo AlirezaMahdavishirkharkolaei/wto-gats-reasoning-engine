@@ -1,0 +1,45 @@
+{
+  "title": "EU Data Act, Article 5(3): DMA gatekeepers excluded as eligible third parties",
+  "answers": {
+    "name": "Exclusion of designated gatekeepers from receiving connected-product data (Data Act Art. 5(3))",
+    "member": "European Union",
+    "description": "Undertakings designated as gatekeepers under the Digital Markets Act are not eligible third parties: users cannot have product data shared with them, and third parties may not pass the data on to them.",
+    "sector": "Data-based aftermarket and related services; data processing services (W/120 1.B, CPC 84) – classification contested",
+    "modes": [
+      "mode1",
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "unknown",
+    "mfn_exemption": "no",
+    "mfn_art5": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "no",
+    "nt_origin": "no",
+    "nt_like": "yes",
+    "nt_lfv": "yes",
+    "dr_type": "no",
+    "x_paragraph": "none",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "nt_lfv": "The criterion is formally origin-neutral, but almost all designated gatekeepers are headquartered outside the EU: a de facto national-treatment argument.",
+    "nt_like": "Assumed for the analysis: gatekeepers and other data-service providers compete for the same data-based services. Contested; this is the pivotal question.",
+    "mfn_differential": "Whether the effect falls disproportionately on suppliers of some non-EU Members (e.g. the United States) rather than others needs evidence.",
+    "x_paragraph": "Contestability and fairness of digital markets are not Article XIV grounds. A (c) argument would need the measure to secure compliance with GATS-consistent laws.",
+    "_scenario": "Illustrative inputs for research discussion, based on Regulation (EU) 2023/2854 as adopted. Amendments to the Data Act have since been proposed (Digital Omnibus); check the current text. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule."
+  },
+  "sources": [
+    {
+      "label": "Regulation (EU) 2023/2854 (Data Act), Art. 5(3)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    }
+  ]
+}
