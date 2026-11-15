@@ -1,0 +1,43 @@
+{
+  "title": "EU Data Act, Article 35: interoperability requirements for data processing services",
+  "answers": {
+    "name": "Interoperability specifications and standards for data processing services (Data Act Art. 35)",
+    "member": "European Union",
+    "description": "Open interoperability specifications and harmonised standards for data processing services, which providers must comply with to facilitate switching and in-parallel use.",
+    "sector": "Data processing services (W/120 1.B.c, CPC 843)",
+    "modes": [
+      "mode1",
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "no",
+    "nt_origin": "no",
+    "nt_like": "yes",
+    "nt_lfv": "no",
+    "dr_type": "yes",
+    "dr_admin_ok": "unknown",
+    "dr_burden_ok": "unknown",
+    "dr_reference_paper": "yes",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "dr_type": "Interoperability requirements operate as technical standards (Article VI).",
+    "dr_reference_paper": "The EU participates in the Reference Paper on Services Domestic Regulation (in force since February 2024); sector coverage to be verified.",
+    "_scenario": "Illustrative inputs for research discussion, based on Regulation (EU) 2023/2854 as adopted. Amendments to the Data Act have since been proposed (Digital Omnibus); check the current text. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule."
+  },
+  "sources": [
+    {
+      "label": "Regulation (EU) 2023/2854 (Data Act), Art. 35",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    }
+  ]
+}

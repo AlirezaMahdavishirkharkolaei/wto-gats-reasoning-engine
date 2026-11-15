@@ -1,0 +1,36 @@
+{
+  "title": "Hypothetical: 49% cap on foreign ownership of telecom operators",
+  "answers": {
+    "name": "Foreign equity cap of 49% in licensed telecom operators",
+    "member": "Hypothetical Member",
+    "description": "Foreign investors may hold at most 49% of the capital of a licensed telecommunications operator.",
+    "sector": "Telecommunication services (W/120 2.C)",
+    "modes": [
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [
+      "f"
+    ],
+    "ma_zero_quota": "no",
+    "nt_origin": "yes",
+    "nt_like": "unknown",
+    "nt_lfv": "yes",
+    "dr_type": "no",
+    "x_paragraph": "none",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "c_limitation": "If the Schedule inscribed 'foreign equity limited to 49%', the measure would be covered.",
+    "x_paragraph": "Keeping operators under domestic control is an industrial-policy objective, not an Article XIV ground."
+  },
+  "sources": []
+}

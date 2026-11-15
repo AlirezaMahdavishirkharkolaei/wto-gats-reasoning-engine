@@ -1,0 +1,43 @@
+{
+  "title": "Hypothetical: data-localisation requirement for cloud computing services",
+  "answers": {
+    "name": "Mandatory local storage and processing of all customer data",
+    "member": "Hypothetical Member",
+    "description": "Cloud and data-processing services may only be supplied using servers located in the territory; cross-border processing is prohibited.",
+    "sector": "Data processing services (W/120 1.B.c, CPC 843)",
+    "modes": [
+      "mode1",
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "yes",
+    "nt_origin": "no",
+    "nt_like": "yes",
+    "nt_lfv": "yes",
+    "dr_type": "no",
+    "x_paragraph": "c_privacy",
+    "x_laws_consistent": "yes",
+    "x_design": "yes",
+    "x_contribution": "yes",
+    "x_highly_restrictive": "yes",
+    "x_alternative": "yes",
+    "ch_discrimination": "unknown",
+    "ch_disguised": "unknown",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "ma_zero_quota": "Cross-border (Mode 1) supply becomes impossible.",
+    "nt_lfv": "Local infrastructure requirements weigh more heavily on foreign suppliers without domestic data centres.",
+    "x_alternative": "Transfer safeguards (adequacy decisions, contractual clauses, certification) could protect personal data with less trade restriction."
+  },
+  "sources": []
+}

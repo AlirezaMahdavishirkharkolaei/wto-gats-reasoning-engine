@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GATS Reasoning Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a working legal tool. Questionnaire on the left, the reasoning trace on the right (sticky);
+   one column on phones with the result first. */
+:root {
+  --paper: #f3f5f7;
+  --panel: #ffffff;
+  --ink: #142030;
+  --muted: #5a6573;
+  --line: #dde2e8;
+  --accent: #0f5c8c;
+  --accent-soft: #e3eef6;
+  --good: #1d7442; --good-soft: #e1f1e7;
+  --bad: #b3302f; --bad-soft: #f8e3e2;
+  --warn: #8a5a00; --warn-soft: #fbf0d5;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #10161d; --panel: #18212b; --ink: #e7ecf1; --muted: #a3afbc; --line: #2b3744;
+    --accent: #6fb2e6; --accent-soft: #1b3044; --good: #7fd09a; --good-soft: #17301f;
+    --bad: #f08c84; --bad-soft: #3a1e1d; --warn: #f0c45e; --warn-soft: #382c14; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #10161d; --panel: #18212b; --ink: #e7ecf1; --muted: #a3afbc; --line: #2b3744;
+  --accent: #6fb2e6; --accent-soft: #1b3044; --good: #7fd09a; --good-soft: #17301f;
+  --bad: #f08c84; --bad-soft: #3a1e1d; --warn: #f0c45e; --warn-soft: #382c14; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--body); }
+header.top { max-width: 1240px; margin: 0 auto; padding: 28px 20px 8px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+h1, h2 { font-family: var(--display); margin: 0; text-wrap: balance; }
+h1 { font-size: 34px; line-height: 1.1; }
+h2 { font-size: 21px; }
+h3 { font-size: 15px; margin: 0; }
+p { margin: 0; }
+a { color: var(--accent); }
+.sub { color: var(--muted); max-width: 72ch; margin-top: 6px; }
+.status { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--panel); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); }
+.status.ready .dot { background: var(--good); } .status.error .dot { background: var(--bad); }
+.layout { max-width: 1240px; margin: 0 auto; padding: 16px 20px 64px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } #result { order: -1; position: static !important; max-height: none !important; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin-bottom: 14px; }
+.field { display: grid; gap: 4px; font-size: 13px; color: var(--muted); flex: 1 1 260px; min-width: 0; }
+.field select { width: 100%; max-width: 100%; }
+select, button, input[type=text], textarea { font: 14px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+select, button { min-height: 38px; }
+button { cursor: pointer; font-weight: 500; }
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+fieldset { border: 0; margin: 0 0 6px; padding: 0; }
+details.step { border-top: 1px solid var(--line); padding: 10px 0; }
+details.step > summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+details.step > summary::-webkit-details-marker { display: none; }
+details.step > summary::after { content: "+"; color: var(--muted); font-weight: 400; }
+details.step[open] > summary::after { content: "–"; }
+.q { padding: 10px 0 4px; display: grid; gap: 6px; }
+.q label.text { font-size: 14.5px; }
+.q .help { font-size: 12.5px; color: var(--muted); }
+.refs { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 11.5px; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; text-decoration: none; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; width: fit-content; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg label { padding: 5px 14px; font-size: 13.5px; cursor: pointer; border-right: 1px solid var(--line); }
+.seg label:last-of-type { border-right: 0; }
+.seg input:checked + label { background: var(--accent); color: #fff; }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: -2px; }
+.checks { display: grid; gap: 4px; font-size: 14px; }
+.checks label { display: flex; gap: 8px; align-items: start; }
+input[type=text], textarea { width: 100%; }
+textarea { min-height: 54px; resize: vertical; }
+#result { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+.risk { border-left: 5px solid var(--line); border-radius: 10px; padding: 12px 16px; background: var(--paper); display: grid; gap: 6px; }
+.risk.High { border-left-color: var(--bad); } .risk.Medium { border-left-color: var(--warn); } .risk.Low { border-left-color: var(--good); }
+.risk .label { font-weight: 700; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; }
+.risk.High .label { color: var(--bad); } .risk.Medium .label { color: var(--warn); } .risk.Low .label { color: var(--good); }
+.meter { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--accent); }
+.trace { display: grid; gap: 8px; margin-top: 14px; }
+.tstep { border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 8px; padding: 9px 12px; }
+.tstep.bad { border-left-color: var(--bad); } .tstep.good { border-left-color: var(--good); } .tstep.warn { border-left-color: var(--warn); }
+.tstep.muted { opacity: .7; }
+.tstep header { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.pill { font-size: 12px; font-weight: 600; border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.pill.bad { color: var(--bad); background: var(--bad-soft); } .pill.good { color: var(--good); background: var(--good-soft); }
+.pill.warn { color: var(--warn); background: var(--warn-soft); } .pill.muted { color: var(--muted); background: var(--paper); }
+.tstep ul { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; display: grid; gap: 3px; }
+.tstep .auth { font-size: 12.5px; color: var(--muted); }
+.tstep .auth a { color: var(--muted); }
+.block { margin-top: 16px; display: grid; gap: 6px; }
+.block ol, .block ul { margin: 0; padding-left: 20px; font-size: 14px; display: grid; gap: 4px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.note { font-size: 12.5px; color: var(--muted); }
+.msg { font-size: 13.5px; padding: 8px 12px; border-radius: 8px; background: var(--warn-soft); color: var(--warn); }
+.msg[hidden] { display: none; }
+footer { max-width: 1240px; margin: 0 auto; padding: 0 20px 40px; color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) { .tstep, .risk { transition: border-color .2s; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>GATS Reasoning Engine</h1>
+    <p class="sub">Walk a measure affecting trade in services through the GATS analysis: scope, MFN, commitments,
+      market access, national treatment, domestic regulation, and the Article XIV and XIV bis defences. Each step
+      cites the provisions and WTO disputes it relies on and lists what you still need to establish.</p>
+  </div>
+  <span class="status" id="status" role="status"><span class="dot"></span><span id="status-text">Loading the engine…</span></span>
+</header>
+
+<div class="layout">
+  <section class="panel" aria-label="Questionnaire">
+    <div class="toolbar">
+      <div class="field"><label for="example">Start from</label>
+        <select id="example"></select></div>
+      <button id="reset" type="button">Blank questionnaire</button>
+      <button id="import" type="button">Import JSON</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+    </div>
+    <p class="msg" id="msg" hidden></p>
+    <form id="form" autocomplete="off"></form>
+  </section>
+
+  <aside class="panel" id="result" aria-live="polite" aria-label="Analysis"></aside>
+</div>
+
+<footer>
+  <p>Structured research aid, not legal advice. Conclusions depend on the inputs and on interpretive questions decided
+    case by case; verify citations against the reports. Runs entirely in your browser: nothing you enter is sent anywhere.
+    Open source: <a href="https://github.com/AlirezaMahdavishirkharkolaei/wto-gats-reasoning-engine">github.com/AlirezaMahdavishirkharkolaei/wto-gats-reasoning-engine</a> · <span id="version"></span></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const CLS = { concern: "bad", not_satisfied: "bad", satisfied: "good", no_concern: "good", incomplete: "warn",
+  excluded: "muted", not_applicable: "muted", skipped: "muted", info: "muted" };
+const DS = { "EC-Bananas": 27, "Canada-Autos": 139, "Mexico-Telecoms": 204, "US-Gambling": 285, "China-Publications": 363,
+  "China-EPS": 413, "Argentina-FS": 453, "Korea-Beef": 161, "Brazil-Tyres": 332, "Mexico-Soft-Drinks": 308,
+  "Colombia-Textiles": 461, "EC-Seals": 400, "US-Shrimp": 58, "Russia-Transit": 512 };
+
+let DATA = null, py = null, state = null, current = null, timer = null;
+let downloads = null;
+(async () => { try { if (window.claude && window.claude.use) downloads = await window.claude.use("downloads"); } catch (e) { downloads = null; } })();
+
+function setStatus(t, s) { $("status-text").textContent = t; $("status").className = "status" + (s ? " " + s : ""); }
+function msg(t) { $("msg").textContent = t || ""; $("msg").hidden = !t; }
+
+// ---------------------------------------------------------------- form
+function buildForm() {
+  const byStep = {};
+  DATA.questions.forEach((q) => (byStep[q.step] = byStep[q.step] || []).push(q));
+  const html = Object.entries(DATA.steps).map(([sid, title], i) => {
+    const qs = (byStep[sid] || []).map(renderQuestion).join("");
+    return `<details class="step" ${i < 2 ? "open" : ""}><summary>${esc(title)}</summary><fieldset>${qs}</fieldset></details>`;
+  }).join("");
+  $("form").innerHTML = html;
+  $("form").addEventListener("input", onInput);
+  $("form").addEventListener("change", onInput);
+}
+
+function refs(q) {
+  const out = [];
+  const PROV = { XIV_chapeau: "Art. XIV chapeau", XIVbis: "Art. XIV bis", FS_2a: "Annex on Financial Services 2(a)" };
+  if (q.provision) out.push(`<span class="chip">${esc(PROV[q.provision] || "Art. " + q.provision)}</span>`);
+  q.cases.forEach((c) => out.push(`<a class="chip" target="_blank" rel="noopener" href="https://www.wto.org/english/tratop_e/dispu_e/cases_e/ds${DS[c]}_e.htm">${esc(c.replace(/-/g, " – "))}</a>`));
+  return out.length ? `<div class="refs">${out.join("")}</div>` : "";
+}
+
+function renderQuestion(q) {
+  const id = "q_" + q.id;
+  const help = q.help ? `<p class="help">${esc(q.help)}</p>` : "";
+  if (q.kind === "text") {
+    const big = q.id === "description";
+    return `<div class="q"><label class="text" for="${id}">${esc(q.text)}</label>${help}
+      ${big ? `<textarea id="${id}" data-q="${q.id}"></textarea>` : `<input type="text" id="${id}" data-q="${q.id}">`}</div>`;
+  }
+  if (q.kind === "choice") {
+    return `<div class="q"><label class="text" for="${id}">${esc(q.text)}</label>${help}
+      <select id="${id}" data-q="${q.id}"><option value="">— not decided —</option>${q.options.map(([k, l]) => `<option value="${k}">${esc(l)}</option>`).join("")}</select>${refs(q)}</div>`;
+  }
+  if (q.kind === "multi") {
+    return `<div class="q"><span class="text">${esc(q.text)}</span>${help}<div class="checks">${q.options.map(([k, l]) =>
+      `<label><input type="checkbox" data-q="${q.id}" value="${k}" id="${id}_${k}"> <span>${esc(l)}</span></label>`).join("")}</div>${refs(q)}</div>`;
+  }
+  return `<div class="q" role="group" aria-labelledby="${id}_l"><span class="text" id="${id}_l">${esc(q.text)}</span>${help}
+    <div class="seg">${["yes", "no", "unknown"].map((v) => `<input type="radio" name="${q.id}" id="${id}_${v}" value="${v}" data-q="${q.id}"><label for="${id}_${v}">${v === "unknown" ? "Unknown" : v[0].toUpperCase() + v.slice(1)}</label>`).join("")}</div>${refs(q)}</div>`;
+}
+
+function fillForm(answers) {
+  DATA.questions.forEach((q) => {
+    const v = answers[q.id];
+    if (q.kind === "text" || q.kind === "choice") { $("q_" + q.id).value = v || ""; }
+    else if (q.kind === "multi") { q.options.forEach(([k]) => { $(`q_${q.id}_${k}`).checked = (v || []).includes(k); }); }
+    else { const val = ["yes", "no"].includes(v) ? v : "unknown"; $(`q_${q.id}_${val}`).checked = true; }
+  });
+}
+
+function readForm() {
+  const answers = {};
+  DATA.questions.forEach((q) => {
+    if (q.kind === "text" || q.kind === "choice") answers[q.id] = $("q_" + q.id).value.trim();
+    else if (q.kind === "multi") answers[q.id] = q.options.map(([k]) => k).filter((k) => $(`q_${q.id}_${k}`).checked);
+    else answers[q.id] = (document.querySelector(`input[name="${q.id}"]:checked`) || {}).value || "unknown";
+  });
+  return answers;
+}
+
+function onInput() {
+  state.answers = readForm();
+  clearTimeout(timer);
+  timer = setTimeout(run, 250);
+}
+
+// ---------------------------------------------------------------- result
+function render(r) {
+  current = r;
+  const steps = r.steps.map((s) => {
+    const items = s.findings.map((f) => `<li>${esc(f)}</li>`).join("") +
+      (s.missing.length ? s.missing.map((m) => `<li class="note">Missing: ${esc((DATA.questions.find((q) => q.id === m) || {}).text || m)}</li>`).join("") : "") +
+      (!["skipped", "not_applicable"].includes(s.status) && s.case_citations.length
+        ? `<li class="auth">${s.case_citations.map((c, i) => `<a target="_blank" rel="noopener" href="${esc(s.case_urls[i])}">${esc(c)}</a>`).join("; ")}</li>` : "");
+    return `<div class="tstep ${CLS[s.status]}"><header><h3>${esc(s.title)}</h3><span class="pill ${CLS[s.status]}">${esc(s.status_label)}</span></header><ul>${items}</ul></div>`;
+  }).join("");
+  const name = r.measure.name || "Unnamed measure";
+  $("result").innerHTML = `
+    <h2>${esc(name)}</h2>
+    ${r.measure.member ? `<p class="note">${esc(r.measure.member)}${r.measure.modes.length ? " · " + esc(r.measure.modes.join(", ")) : ""}</p>` : ""}
+    <div class="risk ${r.risk}" style="margin-top:12px"><span class="label">Risk of inconsistency: ${r.risk}</span>
+      <p>${esc(r.conclusion)}</p>
+      <div class="note">Input completeness ${Math.round(r.completeness * 100)}%</div><div class="meter"><i style="width:${Math.round(r.completeness * 100)}%"></i></div></div>
+    <div class="trace">${steps}</div>
+    ${r.open_questions.length ? `<div class="block"><h3>Open questions</h3><ol>${r.open_questions.map((q) => `<li>${esc(q.question)}</li>`).join("")}</ol></div>` : ""}
+    ${r.counterarguments.length ? `<div class="block"><h3>Likely counterarguments</h3><ul>${r.counterarguments.map((c) => `<li>${esc(c)}</li>`).join("")}</ul></div>` : ""}
+    ${r.notes && r.notes._scenario ? `<p class="note block">${esc(r.notes._scenario)}</p>` : ""}
+    <div class="actions"><button class="primary" id="dl-memo" type="button">Download memo (HTML)</button>
+      <button id="dl-md" type="button">Download memo (Markdown)</button><button id="dl-json" type="button">Download answers (JSON)</button></div>`;
+  $("dl-memo").onclick = () => save("gats_analysis.html", current.memo_html, "text/html");
+  $("dl-md").onclick = () => save("gats_analysis.md", current.memo_md, "text/markdown");
+  $("dl-json").onclick = () => save("gats_measure.json", JSON.stringify({ ...state, answers: readForm() }, null, 2), "application/json");
+}
+
+async function save(filename, text, type) {
+  try {
+    if (downloads) { await downloads.save({ filename, data: text }); return; }
+    const url = URL.createObjectURL(new Blob([text], { type }));
+    const a = Object.assign(document.createElement("a"), { href: url, download: filename });
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (e) { msg("The download was not completed; your browser or the viewer may have blocked it."); }
+}
+
+async function run() {
+  if (!py) return;
+  try {
+    py.globals.set("_scenario", JSON.stringify(state));
+    render(JSON.parse(await py.runPythonAsync("import bridge\nbridge.run(_scenario)")));
+    msg("");
+  } catch (e) { msg("The analysis failed: " + String(e.message || e).split("\n").filter(Boolean).pop()); }
+}
+
+function loadExample(id) {
+  const ex = DATA.examples.find((x) => x.id === id);
+  state = JSON.parse(JSON.stringify(ex ? ex.scenario : DATA.template));
+  fillForm(state.answers);
+  if (ex) render(ex.result); else run();
+}
+
+async function boot() {
+  DATA = await fetch("data.json").then((r) => r.json());
+  $("version").textContent = "version " + DATA.version;
+  $("example").innerHTML = DATA.examples.map((x) => `<option value="${x.id}">${esc(x.title)}</option>`).join("") + `<option value="">Blank questionnaire</option>`;
+  $("example").value = "eu_data_act_art5_gatekeepers";
+  buildForm();
+  loadExample("eu_data_act_art5_gatekeepers");
+  $("example").onchange = (e) => loadExample(e.target.value);
+  $("reset").onclick = () => { $("example").value = ""; loadExample(""); };
+  $("import").onclick = () => $("import-file").click();
+  $("import-file").onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    try { const sc = JSON.parse(await f.text()); state = { answers: {}, notes: {}, sources: [], ...sc }; fillForm(state.answers); run(); }
+    catch (err) { msg("That file is not valid JSON for this questionnaire."); }
+  };
+  try {
+    py = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/" });
+    const bundle = await fetch("bundle.json").then((r) => r.json());
+    py.FS.mkdirTree("/app/gats_engine/scenarios");
+    for (const [f, text] of Object.entries(bundle)) py.FS.writeFile("/app/" + f, text);
+    await py.runPythonAsync("import sys\nsys.path.insert(0, '/app')\nimport bridge");
+    setStatus("Ready · edit any answer", "ready");
+  } catch (e) {
+    setStatus("Engine failed to load", "error");
+    msg("The engine could not load in this browser, so edits are not re-analysed. The bundled examples still show their full analysis.");
+  }
+}
+boot();
+</script>
+</body>
+</html>

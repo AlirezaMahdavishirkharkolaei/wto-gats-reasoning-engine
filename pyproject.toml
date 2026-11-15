@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gats-engine"
+version = "2.0.0"
+description = "Structured, explainable analysis of measures affecting trade in services under the WTO GATS."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Alireza Mahdavi Shirkharkolaei" }]
+keywords = ["WTO", "GATS", "trade in services", "international economic law", "legal reasoning", "digital trade", "EU Data Act"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+gats-engine = "gats_engine.cli:main"
+
+[tool.setuptools]
+packages = ["gats_engine"]
+
+[tool.setuptools.package-data]
+gats_engine = ["scenarios/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

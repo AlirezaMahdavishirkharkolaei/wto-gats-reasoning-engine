@@ -1,48 +1,106 @@
-**WTO–GATS Reasoning Engine**
+# WTO–GATS Reasoning Engine
 
-**A research-oriented tool for structuring legal analysis under the GATS**
+[![tests](https://github.com/AlirezaMahdavishirkharkolaei/wto-gats-reasoning-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/AlirezaMahdavishirkharkolaei/wto-gats-reasoning-engine/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-1. **Research Context and Purpose**
-Legal analysis under the General Agreement on Trade in Services (GATS) commonly follows a structured reasoning sequence developed in WTO jurisprudence. This sequence typically begins with the identification of a prima facie inconsistency with market access (Article XVI) or national treatment (Article XVII), and, where relevant, proceeds to the examination of justifications under Article XIV, including necessity and proportionality considerations and compliance with chapeau-type conditions.
-The purpose of this repository is to provide a conceptual and research-oriented tool that mirrors this reasoning structure in a transparent and systematic manner. Rather than offering automated legal conclusions, the tool is designed to support doctrinal clarity, facilitate comparative reasoning, and assist in the organization of complex legal arguments in research on services trade and digital regulation.
+**An open, explainable tool for structuring legal analysis under the WTO General Agreement on Trade in Services (GATS).**
 
-2. **Relation to the PhD Research Project**
-This project accompanies a doctoral research project examining the compatibility of selected provisions of the EU Data Act (Articles 4, 5, and 35) with WTO obligations under the GATS. The repository operationalizes the core analytical pathway employed in the dissertation—namely:
-identification of potential GATS market access or national treatment concerns;
+You describe a regulatory measure by answering a questionnaire. The engine walks it through the analytical sequence developed in WTO jurisprudence and returns a reasoning trace with the provisions and disputes behind each step. It also reports the facts you still need to establish and the arguments the other side is likely to raise.
 
-assessment of regulatory objectives under Article XIV;
-structured consideration of necessity and proportionality; and
-examination of non-arbitrary or non-discriminatory application as reflected in chapeau-type reasoning.
-By translating this analytical sequence into a structured logic model, the tool serves as a methodological aid for developing and testing hypothetical scenarios involving cross-border data flows and digital services.
+It is a research and teaching aid. It does not automate legal conclusions. Unanswered questions are reported as information gaps, never guessed.
 
-3. **Methodological Approach**
-The tool adopts a rule-based and explainable approach, reflecting the logic of WTO legal reasoning rather than technical automation. Each step corresponds to a well-established doctrinal stage in WTO case law, including landmark decisions such as US–Gambling, Korea–Beef, and China–Publications.
-The variables used in the model are deliberately simplified proxies. They are intended to prompt legally relevant questions such as the existence of less trade-restrictive alternatives or the clarity of a measure’s contribution to a legitimate objective rather than to replace detailed factual or legal assessment. The output highlights analytical steps taken, risk indicators, and information gaps, thereby reinforcing the interpretive nature of WTO analysis.
+## The analysis
 
-4. **Scope and Limitations**
-This repository does not aim to:
-provide legal advice;
-automate legal decision-making; or
-determine WTO-consistency in a definitive manner.
-Instead, it should be understood as a conceptual research instrument. Its value lies in clarifying analytical pathways, improving internal coherence in legal argumentation, and enhancing transparency in the assessment of regulatory measures affecting trade in services.
+| Step | What the engine checks |
+|---|---|
+| 1. Scope (Art. I) | Measure by a Member affecting trade in services; modes of supply; the governmental-authority exclusion |
+| 2. MFN (Art. II) | Less favourable treatment between foreign Members, de jure or de facto; Art. II exemptions; Art. V |
+| 3. Commitments | Whether the sector and mode are committed, "Unbound" entries, inscribed limitations |
+| 4. Market access (Art. XVI) | The exhaustive six measure types of XVI:2, including the "zero quota" (*US – Gambling*) |
+| 5. National treatment (Art. XVII) | Likeness (presumed for origin-based distinctions) and modification of the conditions of competition (*Argentina – Financial Services*) |
+| 6. Domestic regulation (Art. VI) | Licensing, qualification and technical standards; the 2021 Reference Paper |
+| 7. General exceptions (Art. XIV) | The closed list of paragraphs (a)–(e); public-order footnote 5; GATS-consistent laws under (c); design; necessity as weighing and balancing, including a reasonably available alternative |
+| 8. Chapeau | Arbitrary or unjustifiable discrimination; disguised restriction |
+| 9. Security (Art. XIV bis) | The XIV bis:1(b) categories and the good-faith plausibility review (*Russia – Traffic in Transit*, by analogy) |
+| 10. Prudential carve-out | Annex on Financial Services, para. 2(a) |
 
-5. **How to Use the Tool (Research Demonstration)**
+The engine gives each step a status: *issue indicated*, *no issue*, *not applicable*, *information missing*, *requirement met / not met*, or *not reached*. The overall **risk of inconsistency** works as follows:
 
-The repository contains illustrative scenarios inspired by regulatory measures affecting digital services. These scenarios are hypothetical and serve solely for analytical demonstration.
-To run the examples:
-Copy code
-Bash
-python -m src.examples
+* **Low:** no prima facie inconsistency, or one with a defence that appears available.
+* **Medium:** the outcome depends on missing facts.
+* **High:** a prima facie inconsistency and no available defence.
 
-The output presents:
-a qualitative risk indication (Low / Medium / High);
+## Try it
 
-a step-by-step reasoning trace aligned with GATS analysis; and
-a list of missing information required for a complete legal assessment.
+**In the browser (no installation):** the web app in `web/` runs the same Python engine with Pyodide. Your inputs never leave your browser.
 
-6. **Academic Relevance**
-By bridging doctrinal analysis and structured logic, this project contributes to ongoing discussions on regulatory autonomy, legal certainty, and institutional coherence in international economic law. It demonstrates how complex legal tests developed in WTO jurisprudence may be systematically articulated without compromising their interpretive and context-sensitive character.
+* Build it locally with `python scripts/build_web.py`.
+* Once GitHub Pages is enabled it is published at `https://alirezamahdavishirkharkolaei.github.io/wto-gats-reasoning-engine/`.
 
-7. **Disclaimer**
-This repository is provided exclusively for academic and research purposes.
-It does not constitute legal advice and should not be used as a substitute for doctrinal legal analysis or case-specific evaluation.
+**On the command line** (Python 3.10+, no dependencies):
+
+```bash
+pip install git+https://github.com/AlirezaMahdavishirkharkolaei/wto-gats-reasoning-engine
+gats-engine examples                                   # bundled scenarios
+gats-engine assess eu_data_act_art5_gatekeepers        # Markdown memo
+gats-engine assess us_gambling_remote_betting --format html --out memo.html
+gats-engine template > my_measure.json                 # blank questionnaire to fill in
+gats-engine interview --out my_measure.json            # or answer question by question
+gats-engine assess my_measure.json --format json
+```
+
+**From Python:**
+
+```python
+from gats_engine import assess
+result = assess({"answers": {"s_measure": "yes", "s_affects": "yes", "c_committed": "yes", "ma_types": ["f"], ...}})
+print(result.risk, result.conclusion)
+for step in result.steps:
+    print(step.title, step.status_label, step.findings)
+```
+
+## Bundled scenarios
+
+| Scenario | Purpose |
+|---|---|
+| `us_gambling_remote_betting` | **Validation.** Reproduces the outcome of *US – Gambling* (DS285): XVI violation, provisional justification under XIV(a), failure of the chapeau |
+| `data_localisation_cloud` | Hypothetical data-localisation requirement for cloud services |
+| `telecom_foreign_equity_cap` | Hypothetical 49% foreign-equity cap (XVI:2(f)) |
+| `eu_data_act_art5_gatekeepers` | EU Data Act Art. 5(3): DMA gatekeepers excluded as eligible third parties (de facto national treatment) |
+| `eu_data_act_art32_governmental_access` | EU Data Act Art. 32: safeguards against third-country governmental access to non-personal data |
+| `eu_data_act_art35_interoperability` | EU Data Act Art. 35: interoperability requirements as technical standards (Art. VI) |
+
+The Data Act scenarios are **illustrative inputs for research discussion**. Each answer carries a note explaining the assumption behind it, and assumed Schedule entries must be checked against the EU's consolidated schedule. They are based on Regulation (EU) 2023/2854 as adopted. Amendments have since been proposed, so check the current text.
+
+## Research context
+
+The tool relates to a doctoral research proposal and a research article by the author on the compatibility of EU digital regulation, in particular the Data Act, with the GATS. It makes that analytical pathway explicit and testable:
+
+* Which assumptions decide the outcome? For Art. 5(3), likeness of gatekeepers and other data-service providers.
+* Which Article XIV paragraph, if any, can carry the EU's objectives?
+* Where does the burden of proof shift between the parties?
+
+## Design choices
+
+* **Doctrine as data:** provisions and authorities live in [`doctrine.py`](gats_engine/doctrine.py), and the questions in [`questions.py`](gats_engine/questions.py). The CLI, the web form and the JSON template are all generated from these files.
+* **No guessing:** "unknown" is a first-class answer. It produces *information missing* and an open question, never a silent default.
+* **Validated against a real dispute:** the *US – Gambling* scenario is a test case.
+* **Citations:** pinpoint paragraphs are given only where checked. All dispute links point to the WTO's case pages.
+
+See [docs/methodology.md](docs/methodology.md) for the decision rules of every step.
+
+## Limitations
+
+* The questions are simplified proxies. Likeness, necessity and the chapeau are holistic, case-specific assessments, so the engine structures them but does not decide them.
+* Several authorities are GATT Article XX/XXI reports applied by analogy, as is common in GATS analysis.
+* Whether a sector is committed depends on scheduling and classification questions (W/120, CPC, technological neutrality) that the engine records but does not resolve.
+* Not legal advice.
+
+## Citation
+
+Use GitHub's "Cite this repository" button, which reads [CITATION.cff](CITATION.cff).
+
+## License
+
+[MIT](LICENSE)
