@@ -97,6 +97,10 @@ See [docs/methodology.md](docs/methodology.md) for the decision rules of every s
 * Whether a sector is committed depends on scheduling and classification questions (W/120, CPC, technological neutrality) that the engine records but does not resolve.
 * Not legal advice.
 
+## Collaboration
+
+**Mohammad Amir Modami** collaborated on the legal analysis and research behind this project.
+
 ## Citation
 
 Use GitHub's "Cite this repository" button, which reads [CITATION.cff](CITATION.cff).
