@@ -222,9 +222,11 @@ def assess(scenario: dict) -> Assessment:
             if conditional:
                 ma.findings.append("This holds only if the Member has a market-access commitment for the mode(s).")
     else:
-        if a.get("ma_zero_quota") == UNKNOWN and not types:
-            ma.missing.append("ma_zero_quota")
         ma.findings.append("None of the six Article XVI:2 measure types is indicated. Other burdens belong under Articles VI or XVII.")
+        if a.get("ma_zero_quota") == UNKNOWN:
+            ma.status = "incomplete"
+            ma.missing.append("ma_zero_quota")
+            ma.findings.append("Whether the measure prohibits supply through a committed mode altogether (a 'zero quota') is not established.")
     steps.append(ma)
 
     # ---------------------------------------------------------------- 5. national treatment
@@ -284,6 +286,7 @@ def assess(scenario: dict) -> Assessment:
                 dr.findings.append("The Member has scheduled the Reference Paper on Services Domestic Regulation: its additional "
                                    "disciplines (transparency, objective criteria, timely procedures) also apply.")
     elif a.get("dr_type") == UNKNOWN:
+        dr.status = "incomplete"
         dr.missing.append("dr_type")
         dr.findings.append("Whether the measure is a licensing/qualification requirement or technical standard is not established.")
     else:
