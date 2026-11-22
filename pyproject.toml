@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gats-engine"
-version = "2.0.0"
+version = "2.1.0"
 description = "Structured, explainable analysis of measures affecting trade in services under the WTO GATS."
 readme = "README.md"
 license = "MIT"

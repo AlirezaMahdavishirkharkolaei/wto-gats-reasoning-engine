@@ -1,0 +1,43 @@
+{
+  "title": "EU Data Act, Articles 3-5: access-by-design, user access and sharing duties for providers of related services",
+  "answers": {
+    "name": "Data-access and data-sharing obligations of data holders for connected products and related services (Data Act Arts. 3-5)",
+    "member": "European Union",
+    "description": "Connected products and related services must be designed so that the data they generate are accessible to the user (Art. 3). The data holder must make those data available to the user (Art. 4) and, at the user's request, to a third party on fair, reasonable and non-discriminatory terms (Art. 5). The obligations apply to all data holders whose products or related services are placed on the EU market, wherever they are established.",
+    "sector": "Related services of connected products; data processing and cloud services (W/120 1.B, CPC 84) - classification contested",
+    "modes": [
+      "mode1",
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "no",
+    "nt_origin": "no",
+    "nt_like": "yes",
+    "nt_lfv": "unknown",
+    "dr_type": "unknown",
+    "dr_reference_paper": "unknown",
+    "sec_invoked": "no",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "s_affects": "Pivotal preliminary question: the obligations attach to connected products (goods) and to related services. Only the effect on the supply of related and data services is assessed here; obligations on the product itself fall under the GATT and the TBT Agreement.",
+    "ma_types": "Sharing and access duties are qualitative obligations, not one of the six Article XVI:2 limitations. Market access is not engaged.",
+    "nt_lfv": "The rules are origin-neutral and apply to EU and non-EU data holders alike. A de facto argument would need evidence that compliance costs fall more heavily on non-EU suppliers, for example a Korean cloud provider supplying related services cross-border. This is the pivotal factual question.",
+    "dr_type": "The access-by-design duty in Art. 3 may be characterised as a technical standard under Article VI:4-5. Whether it is, and whether the EU has scheduled the Reference Paper on Services Domestic Regulation for these sectors, must be checked.",
+    "_scenario": "Illustrative inputs for research discussion. Based on Regulation (EU) 2023/2854 as adopted; Art. 3(1) access by design applies to products placed on the market from 12 September 2026. Status of amendments (November 2026): the Data Omnibus is still in negotiation; the Council agreed its mandate on 21 October 2026 (ST 14756/26) and the Parliament has not adopted its position. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule."
+  },
+  "sources": [
+    {
+      "label": "Regulation (EU) 2023/2854 (Data Act), Arts. 3-5",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    }
+  ]
+}

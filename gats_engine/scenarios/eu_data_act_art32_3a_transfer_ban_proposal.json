@@ -1,0 +1,60 @@
+{
+  "title": "PROPOSAL (not law): Member State bans on transferring designated non-personal data to third-country authorities (Digital Omnibus amendment to Data Act Art. 32)",
+  "answers": {
+    "name": "Member State designation of non-personal data categories that may not be transferred to, or accessed by, third-country authorities (proposed Art. 32(3a))",
+    "member": "European Union (and its Member States)",
+    "description": "A European Parliament amendment to the Digital Omnibus would let Member States designate categories of non-personal data whose transfer to, or access by, third-country authorities is prohibited for reasons of public security, provided the designation is necessary and proportionate. Providers of data processing services holding such data in the EU could not comply with third-country orders covering them.",
+    "sector": "Data processing services, cloud and edge (W/120 1.B.c, CPC 843)",
+    "modes": [
+      "mode1",
+      "mode3"
+    ],
+    "s_measure": "yes",
+    "s_affects": "yes",
+    "s_govauth": "no",
+    "mfn_differential": "unknown",
+    "mfn_exemption": "no",
+    "mfn_art5": "no",
+    "c_committed": "yes",
+    "c_ma_unbound": "no",
+    "c_nt_unbound": "no",
+    "c_limitation": "no",
+    "ma_types": [],
+    "ma_zero_quota": "unknown",
+    "nt_origin": "no",
+    "nt_like": "yes",
+    "nt_lfv": "yes",
+    "dr_type": "no",
+    "x_paragraph": "a_order",
+    "x_order_threat": "unknown",
+    "x_design": "yes",
+    "x_contribution": "unknown",
+    "x_highly_restrictive": "yes",
+    "x_alternative": "unknown",
+    "ch_discrimination": "unknown",
+    "ch_disguised": "unknown",
+    "sec_invoked": "yes",
+    "sec_category": "unknown",
+    "sec_plausible": "unknown",
+    "fs_sector": "no"
+  },
+  "notes": {
+    "ma_zero_quota": "Pivotal design question. A ban limited to transfers to third-country authorities does not prohibit cross-border supply as such. A broad designation that in practice forces providers to keep the data on EU-controlled infrastructure could approach a Mode 1 prohibition, a data-localisation measure in GATS terms.",
+    "mfn_differential": "Formally neutral, but the burden falls on providers from countries whose laws compel disclosure of data held abroad. Whether this differentiates between foreign Members needs evidence.",
+    "nt_lfv": "EU providers are not subject to third-country disclosure orders in the same way, so the ban weighs de facto on non-EU providers. Assumed for the analysis.",
+    "x_paragraph": "Public security of data held in the EU is argued under (a) public order, which requires a genuine and sufficiently serious threat to a fundamental interest of society (footnote 5). Article XIV bis is the alternative route.",
+    "x_alternative": "The case-by-case conditions of the existing Art. 32 (assessment of the third-country request before compliance) are an obvious candidate for a less trade-restrictive alternative.",
+    "sec_category": "Article XIV bis:1(b) is limited to military provisioning, fissionable materials, and war or other emergency in international relations. A peacetime designation of data categories fits only if linked to such an emergency. Open research question.",
+    "_scenario": "Illustrative inputs for research discussion. This is a PROPOSED amendment (European Parliament amendments 271 and 708 to the Digital Omnibus, adding Art. 32(3a)), not law. Status (November 2026): the Data Omnibus is still in negotiation; the Council agreed its mandate on 21 October 2026 (ST 14756/26), which does not contain this paragraph, and the Parliament has not adopted its position. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule."
+  },
+  "sources": [
+    {
+      "label": "Regulation (EU) 2023/2854 (Data Act), Art. 32",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    },
+    {
+      "label": "Digital Omnibus tracker: Data Act Art. 32 (Council texts and Parliament amendments)",
+      "url": "http://research.eutechreg.com/trackers/digital-omnibus/articles/regulation-eu-2023-2854.article-32/"
+    }
+  ]
+}

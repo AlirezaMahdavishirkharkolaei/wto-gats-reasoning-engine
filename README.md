@@ -67,15 +67,25 @@ for step in result.steps:
 | `us_gambling_remote_betting` | **Validation.** Reproduces the outcome of *US – Gambling* (DS285): XVI violation, provisional justification under XIV(a), failure of the chapeau |
 | `data_localisation_cloud` | Hypothetical data-localisation requirement for cloud services |
 | `telecom_foreign_equity_cap` | Hypothetical 49% foreign-equity cap (XVI:2(f)) |
+| `eu_data_act_art3_5_connected_product_data` | EU Data Act Arts. 3-5: access by design, user access and third-party sharing duties for related services (origin-neutral; de facto national treatment and Art. VI open) |
 | `eu_data_act_art5_gatekeepers` | EU Data Act Art. 5(3): DMA gatekeepers excluded as eligible third parties (de facto national treatment) |
 | `eu_data_act_art32_governmental_access` | EU Data Act Art. 32: safeguards against third-country governmental access to non-personal data |
+| `eu_data_act_art32_3a_transfer_ban_proposal` | **Proposal, not law.** Digital Omnibus amendment that would let Member States ban transfers of designated non-personal data to third-country authorities (localisation and XIV bis questions) |
 | `eu_data_act_art35_interoperability` | EU Data Act Art. 35: interoperability requirements as technical standards (Art. VI) |
 
-The Data Act scenarios are **illustrative inputs for research discussion**. Each answer carries a note explaining the assumption behind it, and assumed Schedule entries must be checked against the EU's consolidated schedule. They are based on Regulation (EU) 2023/2854 as adopted. Amendments have since been proposed, so check the current text.
+The Data Act scenarios are **illustrative inputs for research discussion**. Each answer carries a note explaining the assumption behind it, and assumed Schedule entries must be checked against the EU's consolidated schedule. They are based on Regulation (EU) 2023/2854 as adopted.
+
+## Status of the law (November 2026)
+
+* **EU Data Act:** in application since 12 September 2025. Access by design (Art. 3(1)) applies to products placed on the market from 12 September 2026.
+* **Digital Omnibus:** the data part is still in negotiation and is not law. The Council agreed its negotiating mandate on 21 October 2026; the European Parliament has not adopted its position. Article 32 was revised in Council texts in June and September 2026.
+* **WTO:** at MC14 (Yaoundé, March 2026) the moratorium on customs duties on electronic transmissions lapsed on 30 March 2026. Sixty-six Members adopted interim arrangements to bring the plurilateral Agreement on Electronic Commerce into force. That Agreement applies GATS Article XIV mutatis mutandis and has a personal data protection exception, but contains no commitments on cross-border data flows. The GATS therefore remains the binding multilateral discipline for the measures modelled here.
+
+The engine does not yet model the Agreement on Electronic Commerce; see the [research roadmap](docs/roadmap.md).
 
 ## Research context
 
-The tool relates to a doctoral research proposal and a research article by the author on the compatibility of EU digital regulation, in particular the Data Act, with the GATS. It makes that analytical pathway explicit and testable:
+The tool relates to a doctoral research proposal and a research article by the author on the compatibility of EU digital regulation, in particular the Data Act, with the GATS. It implements the proposal's assessment framework, which treats data governance as a non-trade value and does not assume a violation: it first asks which discipline applies (Articles VI and XVII; Article XVI only for the six XVI:2 types), then whether Article XIV or XIV bis can carry the EU's objectives. It makes that analytical pathway explicit and testable:
 
 * Which assumptions decide the outcome? For Art. 5(3), likeness of gatekeepers and other data-service providers.
 * Which Article XIV paragraph, if any, can carry the EU's objectives?

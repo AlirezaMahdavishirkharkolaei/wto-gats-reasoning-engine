@@ -37,12 +37,16 @@
   "notes": {
     "nt_lfv": "Applies to all providers, but compliance costs are higher for providers subject to foreign disclosure laws: evidence needed.",
     "x_paragraph": "The data are non-personal, so (c)(ii) privacy does not fit; (c) compliance with EU rules on trade secrets/IP, (a) public order or XIV bis are possible routes.",
-    "_scenario": "Illustrative inputs for research discussion, based on Regulation (EU) 2023/2854 as adopted. Amendments to the Data Act have since been proposed (Digital Omnibus); check the current text. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule."
+    "_scenario": "Illustrative inputs for research discussion, based on Regulation (EU) 2023/2854 as adopted. Status of amendments (November 2026): the Data Omnibus is still in negotiation; the Council agreed its mandate on 21 October 2026 (ST 14756/26) and the Parliament has not adopted its position. Check the current text. Schedule entries are assumed and must be verified against the EU's consolidated GATS schedule. Article 32 was revised in successive Council texts (June and September 2026); see the Digital Omnibus tracker."
   },
   "sources": [
     {
       "label": "Regulation (EU) 2023/2854 (Data Act), Art. 32",
       "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+    },
+    {
+      "label": "Digital Omnibus tracker: Data Act Art. 32 (Council texts and Parliament amendments)",
+      "url": "http://research.eutechreg.com/trackers/digital-omnibus/articles/regulation-eu-2023-2854.article-32/"
     }
   ]
 }

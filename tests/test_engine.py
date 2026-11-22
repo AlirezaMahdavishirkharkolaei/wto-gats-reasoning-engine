@@ -171,6 +171,24 @@ def test_data_act_scenarios_flag_their_pivotal_questions():
     assert status(r, "domestic_regulation") == "incomplete"
 
 
+def test_origin_neutral_access_duties_raise_no_market_access_issue():
+    """Arts. 3-5: qualitative duties are not XVI:2 limitations; the open issue is de facto national treatment."""
+    r = assess(load_scenario("eu_data_act_art3_5_connected_product_data"))
+    assert r.inconsistencies == [] and status(r, "market_access") == "no_concern"
+    assert {q["id"] for q in r.open_questions} >= {"nt_lfv", "dr_type"}
+
+
+def test_proposed_transfer_ban_turns_on_localisation_and_security_questions():
+    r = assess(load_scenario("eu_data_act_art32_3a_transfer_ban_proposal"))
+    assert r.inconsistencies == ["Article XVII (national treatment)"] and r.justification == "doubtful"
+    assert {q["id"] for q in r.open_questions} >= {"ma_zero_quota", "sec_category", "x_alternative"}
+
+
+def test_unknown_facts_are_never_reported_as_no_issue():
+    assert status(run(ma_zero_quota="unknown"), "market_access") == "incomplete"
+    assert status(run(dr_type="unknown"), "domestic_regulation") == "incomplete"
+
+
 # --- doctrine and questionnaire integrity ----------------------------------------------------------
 
 def test_every_reference_resolves():
